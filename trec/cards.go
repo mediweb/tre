@@ -1,11 +1,13 @@
 package tre
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 )
 
-func listCards(boardID string) {
+func listCards(boardID string, save bool) {
 	client := NewClientWithOsExitOnErr()
 
 	board, err := client.Board(boardID)
@@ -19,9 +21,17 @@ func listCards(boardID string) {
 	}
 
 	if len(cards) > 0 {
-		fmt.Println("name", "\t", "url")
+		fmt.Println("name", "\t", "list", "url")
 		for _, card := range cards {
-			fmt.Println(card.Name, card.Url)
+			fmt.Println(card.Name, card.IdList, card.ShortUrl)
+		}
+
+		if save {
+			json, _ := json.Marshal(cards)
+			err := ioutil.WriteFile("./cards.json", json, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
