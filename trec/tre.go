@@ -12,6 +12,7 @@ var (
 	cardsSave    = cards.Flag("save", "Save cards' statuses to see differences later").Bool()
 
 	cardsDiff                  = cli.Command("card-diff", "Show moved cards")
+	cardsDiffBoardID           = cardsDiff.Arg("board_id", "Board ID").Required().String()
 	cardsDiffSlackNotification = cardsDiff.Flag("slack", "Report to slack").Bool()
 
 	lists        = cli.Command("lists", "List lists in a board")
@@ -29,5 +30,6 @@ func Run(args []string) {
 	case "lists":
 		listLists(*listsBoardID)
 	case "card-diff":
+		showMovedCards(*cardsDiffBoardID, *cardsDiffSlackNotification)
 	}
 }
