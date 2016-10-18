@@ -1,2 +1,3 @@
 export TRELLO_KEY=
 export TRELLO_TOKEN=
+export SLACK_INCOMING_WEBHOOK=
